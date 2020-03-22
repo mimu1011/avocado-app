@@ -12,6 +12,9 @@ import {
 } from '@stencil/router';
 
 export namespace Components {
+  interface AppAlert {
+    'message': string;
+  }
   interface AppHome {}
   interface AppProfile {
     'match': MatchResults;
@@ -21,6 +24,12 @@ export namespace Components {
 
 declare global {
 
+
+  interface HTMLAppAlertElement extends Components.AppAlert, HTMLStencilElement {}
+  var HTMLAppAlertElement: {
+    prototype: HTMLAppAlertElement;
+    new (): HTMLAppAlertElement;
+  };
 
   interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {}
   var HTMLAppHomeElement: {
@@ -40,6 +49,7 @@ declare global {
     new (): HTMLAppRootElement;
   };
   interface HTMLElementTagNameMap {
+    'app-alert': HTMLAppAlertElement;
     'app-home': HTMLAppHomeElement;
     'app-profile': HTMLAppProfileElement;
     'app-root': HTMLAppRootElement;
@@ -47,6 +57,10 @@ declare global {
 }
 
 declare namespace LocalJSX {
+  interface AppAlert {
+    'message'?: string;
+    'onAlertDismissed'?: (event: CustomEvent<any>) => void;
+  }
   interface AppHome {}
   interface AppProfile {
     'match'?: MatchResults;
@@ -54,6 +68,7 @@ declare namespace LocalJSX {
   interface AppRoot {}
 
   interface IntrinsicElements {
+    'app-alert': AppAlert;
     'app-home': AppHome;
     'app-profile': AppProfile;
     'app-root': AppRoot;
@@ -66,6 +81,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
+      'app-alert': LocalJSX.AppAlert & JSXBase.HTMLAttributes<HTMLAppAlertElement>;
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-profile': LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
